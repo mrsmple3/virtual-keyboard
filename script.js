@@ -157,7 +157,7 @@ fourthRowContent[8].innerHTML = "<span class='left_size'>,</span>";
 fourthRowContent[9].innerHTML = "<span class='left_size'>.</span>";
 fourthRowContent[10].innerHTML = "<span class='left_size'>/</span>";
 fourthRowContent[11].innerHTML = "<span class='left_size'>\\</span>";
-fourthRowContent[12].innerHTML = "<span class='left_size'>||||||||||</span>";
+fourthRowContent[12].innerHTML = "&uarr;";
 fourthRowContent[13].innerHTML = "Shift";
 //5
 fifthRowContent[0].innerHTML = "Ctlr";
@@ -165,6 +165,6 @@ fifthRowContent[1].innerHTML = "Win";
 fifthRowContent[2].innerHTML = "Alt";
 fifthRowContent[4].innerHTML = "Alt";
 fifthRowContent[5].innerHTML = "Ctlr";
-fifthRowContent[6].innerHTML = "____";
-fifthRowContent[7].innerHTML = "__";
-fifthRowContent[8].innerHTML = "_____";
+fifthRowContent[6].innerHTML = "&larr;";
+fifthRowContent[7].innerHTML = "&darr;";
+fifthRowContent[8].innerHTML = "&rarr;";
