@@ -88,17 +88,17 @@ document.body.appendChild(divMain);
 textArea.rows = 10;
 //Keyboards
 //1
-firstRowContent[0].innerHTML = "<span class='left_size'>~</span>";
+firstRowContent[0].innerHTML = "<span class='left_size'>`</span>";
 firstRowContent[1].innerHTML =
   "<span class='left_size'>1</span> <span class='right_size'>!</span>";
 firstRowContent[2].innerHTML =
   "<span class='left_size'>2</span> <span class='right_size'>@</span>";
 firstRowContent[3].innerHTML =
-  "<span class='left_size'>4</span> <span class='right_size'>#</span>";
+  "<span class='left_size'>3</span> <span class='right_size'>#</span>";
 firstRowContent[4].innerHTML =
   "<span class='left_size'>4</span> <span class='right_size'>$</span>";
 firstRowContent[5].innerHTML =
-  "<span class='left_size'>1</span> <span class='right_size'>!</span>";
+  "<span class='left_size'>5</span> <span class='right_size'>!</span>";
 firstRowContent[6].innerHTML =
   "<span class='left_size'>6</span> <span class='right_size'>^</span>";
 firstRowContent[7].innerHTML =
@@ -168,3 +168,64 @@ fifthRowContent[5].innerHTML = "Ctlr";
 fifthRowContent[6].innerHTML = "&larr;";
 fifthRowContent[7].innerHTML = "&darr;";
 fifthRowContent[8].innerHTML = "&rarr;";
+//functions
+
+function clickOn(button) {
+  button.addEventListener("click", function () {
+    textArea.value += button.textContent;
+  });
+  button.addEventListener("mousedown", function () {
+    this.style.opacity = 0.7;
+  });
+  button.addEventListener("mouseup", function () {
+    this.style.opacity = "";
+  });
+
+  let buttonValues = Array.from(button.querySelectorAll("span")).map(
+    (span) => span.textContent
+  );
+  document.addEventListener("keydown", function (event) {
+    if (buttonValues.includes(event.key) || event.key === button.textContent) {
+      button.style.opacity = "0.7";
+    }
+  });
+  document.addEventListener("keyup", function (event) {
+    if (buttonValues.includes(event.key) || event.key === button.textContent) {
+      button.style.opacity = "";
+    }
+  });
+}
+function clickOnCommon(button) {
+  button.addEventListener("mousedown", function () {
+    this.style.opacity = 0.7;
+  });
+  button.addEventListener("mouseup", function () {
+    this.style.opacity = "";
+  });
+
+  let buttonValues = Array.from(button.querySelectorAll("span")).map(
+    (span) => span.textContent
+  );
+  document.addEventListener("keydown", function (event) {
+    if (buttonValues.includes(event.key) || event.key === button.textContent) {
+      button.style.opacity = "0.7";
+    }
+  });
+  document.addEventListener("keyup", function (event) {
+    if (buttonValues.includes(event.key) || event.key === button.textContent) {
+      button.style.opacity = "";
+    }
+  });
+}
+//1-row functions
+for (let i = 0; i < firstRowContent.length - 1; i++) {
+  clickOn(firstRowContent[i]);
+}
+clickOnCommon(firstRowContent[firstRowContent.length - 1]);
+firstRowContent[13].addEventListener("click", function () {
+  textArea.value = textArea.value.slice(0, -1);
+});
+//2-row functions
+for (let i = 0; i < secondRowContent.length; i++) {
+  clickOn(secondRowContent[i]);
+}
