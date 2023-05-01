@@ -131,7 +131,7 @@ secondRowContent[12].innerHTML = "<span class='left_size'>]</span>";
 secondRowContent[13].innerHTML = "<span class='left_size'>\\</span>";
 secondRowContent[14].innerHTML = "Del";
 //3
-thirdRowContent[0].innerHTML = "CapsLk";
+thirdRowContent[0].innerHTML = "CapsLock";
 thirdRowContent[1].innerHTML = "<span class='left_size'>A</span>";
 thirdRowContent[2].innerHTML = "<span class='left_size'>S</span>";
 thirdRowContent[3].innerHTML = "<span class='left_size'>D</span>";
@@ -160,7 +160,7 @@ fourthRowContent[11].innerHTML = "<span class='left_size'>\\</span>";
 fourthRowContent[12].innerHTML = "&uarr;";
 fourthRowContent[13].innerHTML = "Shift";
 //5
-fifthRowContent[0].innerHTML = "Ctlr";
+fifthRowContent[0].innerHTML = "Ctrl";
 fifthRowContent[1].innerHTML = "Win";
 fifthRowContent[2].innerHTML = "Alt";
 fifthRowContent[4].innerHTML = "Alt";
@@ -169,30 +169,57 @@ fifthRowContent[6].innerHTML = "&larr;";
 fifthRowContent[7].innerHTML = "&darr;";
 fifthRowContent[8].innerHTML = "&rarr;";
 //functions
+document.addEventListener("keydown", function (event) {
+  if (
+    event.key === "Alt" ||
+    event.key === "Ctrl" ||
+    event.key === "Space" ||
+    event.key === "Tab" ||
+    event.key === "Delete" ||
+    event.key === "CapsLock" ||
+    event.key === "Backspace" ||
+    event.key === "Enter" ||
+    event.key === "Meta"
+  ) {
+    event.preventDefault();
+    // Ваш код для выполнения пользовательских действий при нажатии на клавишу Alt
+  }
+});
+document.addEventListener("keydown", function (event) {
+  if (event.key.match(/^[a-z]$/i)) {
+    event.preventDefault();
+    // Ваш код для выполнения пользовательских действий при нажатии на английские буквы
+  }
+});
 
 function clickOn(button) {
+  document.addEventListener("keydown", function (event) {
+    if (
+      event.key === button.textContent ||
+      event.key.toLowerCase() === button.textContent.toLowerCase()
+    ) {
+      textArea.value += event.key;
+    }
+  });
   button.addEventListener("click", function () {
-    textArea.value += button.textContent;
+    textArea.value += button.textContent.toLowerCase();
   });
-  button.addEventListener("mousedown", function () {
-    this.style.opacity = 0.7;
-  });
-  button.addEventListener("mouseup", function () {
-    this.style.opacity = "";
-  });
-
+}
+function clickOnNumber(button) {
   let buttonValues = Array.from(button.querySelectorAll("span")).map(
     (span) => span.textContent
   );
   document.addEventListener("keydown", function (event) {
-    if (buttonValues.includes(event.key) || event.key === button.textContent) {
-      button.style.opacity = "0.7";
+    if (
+      buttonValues.includes(event.key.toLowerCase()) ||
+      event.key.toLowerCase() === button.textContent.toLowerCase()
+    ) {
+      textArea.value += event.key;
     }
   });
-  document.addEventListener("keyup", function (event) {
-    if (buttonValues.includes(event.key) || event.key === button.textContent) {
-      button.style.opacity = "";
-    }
+  button.addEventListener("click", function () {
+    let leftSizeValue = button.querySelector(".left_size").textContent;
+    textArea.value += leftSizeValue;
   });
 }
 function clickOnCommon(button) {
@@ -207,25 +234,207 @@ function clickOnCommon(button) {
     (span) => span.textContent
   );
   document.addEventListener("keydown", function (event) {
-    if (buttonValues.includes(event.key) || event.key === button.textContent) {
+    if (
+      buttonValues.includes(event.key.toLowerCase()) ||
+      event.key.toLowerCase() === button.textContent.toLowerCase()
+    ) {
       button.style.opacity = "0.7";
     }
   });
   document.addEventListener("keyup", function (event) {
-    if (buttonValues.includes(event.key) || event.key === button.textContent) {
+    if (
+      buttonValues.includes(event.key.toLowerCase()) ||
+      event.key.toLowerCase() === button.textContent.toLowerCase()
+    ) {
       button.style.opacity = "";
     }
   });
 }
+
 //1-row functions
 for (let i = 0; i < firstRowContent.length - 1; i++) {
-  clickOn(firstRowContent[i]);
+  clickOnCommon(firstRowContent[i]);
 }
+for (let i = 1; i < firstRowContent.length - 1; i++) {
+  clickOnNumber(firstRowContent[i]);
+}
+clickOn(firstRowContent[0]);
 clickOnCommon(firstRowContent[firstRowContent.length - 1]);
 firstRowContent[13].addEventListener("click", function () {
   textArea.value = textArea.value.slice(0, -1);
 });
+document.addEventListener("keydown", function (event) {
+  if (event.key === firstRowContent[13].textContent) {
+    textArea.value = textArea.value.slice(0, -1);
+  }
+});
 //2-row functions
-for (let i = 0; i < secondRowContent.length; i++) {
+secondRowContent[0].addEventListener("mousedown", function () {
+  this.style.opacity = 0.7;
+  textArea.value += "  ";
+});
+secondRowContent[0].addEventListener("mouseup", function () {
+  this.style.opacity = "";
+});
+document.addEventListener("keydown", function (event) {
+  if (event.key === secondRowContent[0].textContent) {
+    secondRowContent[0].style.opacity = "0.7";
+    textArea.value += "  ";
+  }
+});
+document.addEventListener("keyup", function (event) {
+  if (event.key === secondRowContent[0].textContent) {
+    secondRowContent[0].style.opacity = "";
+  }
+});
+for (let i = 1; i < secondRowContent.length; i++) {
+  clickOnCommon(secondRowContent[i]);
+}
+for (let i = 1; i < secondRowContent.length - 1; i++) {
   clickOn(secondRowContent[i]);
 }
+secondRowContent[secondRowContent.length - 1].addEventListener(
+  "mousedown",
+  function () {
+    let cursorPosition = textArea.selectionStart;
+    textArea.value =
+      textArea.value.slice(0, cursorPosition) +
+      textArea.value.slice(cursorPosition + 1);
+    textArea.setSelectionRange(cursorPosition, cursorPosition);
+  }
+);
+document.addEventListener("keydown", function (event) {
+  if (event.key === "Delete") {
+    secondRowContent[14].style.opacity = "0.7";
+    let cursorPosition = textArea.selectionStart;
+    textArea.value =
+      textArea.value.slice(0, cursorPosition) +
+      textArea.value.slice(cursorPosition + 1);
+    textArea.setSelectionRange(cursorPosition, cursorPosition);
+  }
+});
+document.addEventListener("keyup", function (event) {
+  if (event.key === "Delete") {
+    secondRowContent[14].style.opacity = "";
+  }
+});
+//3-row functions
+for (let i = 0; i < thirdRowContent.length; i++) {
+  clickOnCommon(thirdRowContent[i]);
+}
+for (let i = 1; i < thirdRowContent.length - 1; i++) {
+  clickOn(thirdRowContent[i]);
+}
+document.addEventListener("keydown", function (event) {
+  if (event.key === thirdRowContent[thirdRowContent.length - 1].textContent) {
+    let cursorPosition = textArea.selectionStart;
+    textArea.value =
+      textArea.value.slice(0, cursorPosition) +
+      "\n" +
+      textArea.value.slice(cursorPosition);
+    textArea.setSelectionRange(cursorPosition + 1, cursorPosition + 1);
+  }
+});
+thirdRowContent[thirdRowContent.length - 1].addEventListener(
+  "mousedown",
+  function () {
+    let cursorPosition = textArea.selectionStart;
+    textArea.value =
+      textArea.value.slice(0, cursorPosition) +
+      "\n" +
+      textArea.value.slice(cursorPosition);
+    textArea.setSelectionRange(cursorPosition + 1, cursorPosition + 1);
+  }
+);
+//4-row functions
+for (let i = 0; i < fourthRowContent.length; i++) {
+  clickOnCommon(fourthRowContent[i]);
+}
+for (let i = 1; i < fourthRowContent.length - 3; i++) {
+  clickOn(fourthRowContent[i]);
+}
+//5-row functions
+for (let i = 0; i < fifthRowContent.length; i++) {
+  clickOnCommon(fifthRowContent[i]);
+}
+document.addEventListener("keydown", function (event) {
+  if (event.key === "Control") {
+    fifthRowContent[0].style.opacity = "0.7";
+    fifthRowContent[5].style.opacity = "0.7";
+  }
+});
+document.addEventListener("keyup", function (event) {
+  if (event.key === "Control") {
+    fifthRowContent[0].style.opacity = "";
+    fifthRowContent[5].style.opacity = "";
+  }
+});
+document.addEventListener("keydown", function (event) {
+  if (event.key === "Meta") {
+    fifthRowContent[1].style.opacity = "0.7";
+  }
+});
+document.addEventListener("keyup", function (event) {
+  if (event.key === "Meta") {
+    fifthRowContent[1].style.opacity = "";
+  }
+});
+document.addEventListener("keydown", function (event) {
+  if (event.key === "Meta") {
+    fifthRowContent[1].style.opacity = "0.7";
+  }
+});
+document.addEventListener("keydown", function (event) {
+  if (event.key === " ") {
+    fifthRowContent[3].style.opacity = "0.7";
+    textArea.value += " ";
+  }
+});
+document.addEventListener("keyup", function (event) {
+  if (event.key === " ") {
+    fifthRowContent[3].style.opacity = "";
+  }
+});
+document.addEventListener("keydown", function (event) {
+  if (event.key === "ArrowLeft") {
+    fifthRowContent[6].style.opacity = "0.7";
+  }
+});
+document.addEventListener("keyup", function (event) {
+  if (event.key === "ArrowLeft") {
+    fifthRowContent[6].style.opacity = "";
+  }
+});
+document.addEventListener("keydown", function (event) {
+  if (event.key === "ArrowDown") {
+    fifthRowContent[7].style.opacity = "0.7";
+  }
+});
+document.addEventListener("keyup", function (event) {
+  if (event.key === "ArrowDown") {
+    fifthRowContent[7].style.opacity = "";
+  }
+});
+document.addEventListener("keydown", function (event) {
+  if (event.key === "ArrowRight") {
+    fifthRowContent[8].style.opacity = "0.7";
+  }
+});
+document.addEventListener("keyup", function (event) {
+  if (event.key === "ArrowRight") {
+    fifthRowContent[8].style.opacity = "";
+  }
+});
+document.addEventListener("keydown", function (event) {
+  if (event.key === "ArrowUp") {
+    fourthRowContent[12].style.opacity = "0.7";
+  }
+});
+document.addEventListener("keyup", function (event) {
+  if (event.key === "ArrowUp") {
+    fourthRowContent[12].style.opacity = "";
+  }
+});
+document.addEventListener("keydown", function (event) {
+  console.log(event.key);
+});
