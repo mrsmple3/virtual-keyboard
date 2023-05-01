@@ -524,3 +524,86 @@ body {
 .textarea-content {
   width: 100%;
 }
+/* start style of keybords*/
+.container-keyboard {
+  display: grid;
+  grid-template-rows: repeat(5, 50px);
+  row-gap: 20px;
+}
+.fist_row {
+  display: grid;
+  grid-template-columns: repeat(13, 62px) 1fr;
+  column-gap: 5px;
+  height: 50px;
+}
+.second_row {
+  display: grid;
+  grid-template-columns: 1fr repeat(13, 62px) 1fr;
+  column-gap: 5px;
+  height: 50px;
+}
+.third_row {
+  display: grid;
+  grid-template-columns: 1fr repeat(11, 62px) 1fr;
+  column-gap: 5px;
+  height: 50px;
+}
+.fourth_row {
+  display: grid;
+  grid-template-columns: 1fr repeat(13, 62px);
+  column-gap: 5px;
+  height: 50px;
+}
+.fifth_row {
+  display: grid;
+  grid-template-columns: 0.2fr repeat(2, 62px) 1fr 62px 0.2fr repeat(3, 62px);
+  column-gap: 5px;
+  height: 50px;
+}
+.btn_common {
+  position: relative;
+  height: 100%;
+  border-bottom-left-radius: 10px;
+  border: 1px solid darkblue;
+  background-color: rgb(232, 190, 123);
+  color: #475d9f;
+}
+.btn_primary {
+  background-color: #5b5757;
+  color: antiquewhite;
+}
+.btn_primary {
+  color: antiquewhite;
+}
+.btn_primary_top {
+  border-bottom-right-radius: 10px;
+  color: white;
+  background-color: #475d9f;
+}
+.btn_primary_left {
+  border-bottom-left-radius: 0px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  color: white;
+  background-color: #475d9f;
+}
+.btn_primary_bottom {
+  border-radius: 10px;
+  background-color: #475d9f;
+  color: white;
+}
+.btn_primary_right {
+  border-top-left-radius: 10px;
+  background-color: #475d9f;
+  color: white;
+}
+.left_size {
+  position: absolute;
+  top: 5px;
+  left: 10px;
+}
+.right_size {
+  position: absolute;
+  bottom: 5px;
+  right: 10px;
+}
